@@ -4,7 +4,7 @@ var router = express.Router();
 var colors = require('../service/colors')
 const readline = require('readline');
 const fs = require('fs');
-const filePath = '/Volumes/DATA/01Unity/MLAgents/Report/public/data.json';
+const filePath = 'public/data.json';
 
 router.get('/getData', function (req, res, next) {
     let type = req.params.id;
