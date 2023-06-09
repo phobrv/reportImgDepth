@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <title>
+        {{ title }}
+    </title>
+</head>
+
+<body>
+    <div class="container-fluid mt-2">
+        <div>
+            <canvas id="rayChart"></canvas>
+        </div>
+
+         <div>
+            <canvas id="imgChart"></canvas>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+            const ctxRay = document.getElementById('rayChart');
+            const ctxImg = document.getElementById('imgChart');
+
+
+
+
+            function makeAjaxCall() {
+                const xhr = new XMLHttpRequest();
+                const url = 'http://localhost:3000/api/getData'; // Replace with your API URL
+
+                xhr.open('GET', url, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        console.log(response['img'])
+                        new Chart(ctxImg,
+                            {
+                                type: 'line',
+                                data: response['img'],
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            }
+                        );
+
+                        new Chart(ctxRay,
+                            {
+                                type: 'line',
+                                data: response['ray'],
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                    }
+                };
+
+                xhr.send();
+            }
+            makeAjaxCall();
+        </script>
+    </div>
+</body>
+
+</html>
