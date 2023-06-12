@@ -23,10 +23,15 @@ router.get('/getData', function (req, res, next) {
             rayLen = lineData.length;
         }
 
-        let tmp;
+        let tmp = 0;
         for (var i = 0; i < rayLen ; i++) {
             var rayData = lineData[i];
-            tmp = tmp + rayData['img'] + rayData['ray'];
+            if (tmp == 0){
+                if(rayData["img"] > 0 || rayData['ray'] > 0){
+                    tmp = 1;
+                }
+            }
+            
         }
 
         for (var i = 0; i < rayLen ; i++) {
