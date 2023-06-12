@@ -22,18 +22,30 @@ router.get('/getData', function (req, res, next) {
         if (rayLen === 0) {
             rayLen = lineData.length;
         }
+
+        let tmp;
+        for (var i = 0; i < rayLen ; i++) {
+            var rayData = lineData[i];
+            tmp = tmp + rayData['img'] + rayData['ray'];
+        }
+
         for (var i = 0; i < rayLen ; i++) {
             if (lineInx === 0) {
                 dataImg[i] = [];
                 dataRay[i] = [];
             }
             var rayData = lineData[i];
-            dataImg[i].push(rayData['img']);
+            if(tmp > 0){
+                dataImg[i].push(rayData['img']);
+                dataRay[i].push(rayData['ray']);
+            }
             
-            dataRay[i].push(rayData['ray']);
         }
         lineInx++;
-        labels.push(lineInx);
+        if(tmp>0){
+            labels.push(lineInx);
+        }
+        
 
     });
     // Handle the end of file
